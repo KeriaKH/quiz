@@ -1,0 +1,237 @@
+[
+  {
+    "id": 1,
+    "question": "Nền ngoại giao truyền thống Việt Nam mang bản sắc riêng với đặc trưng nổi bật nào giúp ông cha ta giữ gìn hòa khí với các nước láng giềng lớn mạnh?",
+    "options": [
+      "Hòa hiếu, nhu viễn và \"trong đế ngoài vương\"",
+      "Cương quyết đối đầu",
+      "Bế quan tỏa cảng",
+      "Liên minh quân sự"
+    ],
+    "answer": "Hòa hiếu, nhu viễn và \"trong đế ngoài vương\"",
+    "explanation": "\"Trong xưng đế, ngoài xưng vương\" là một nghệ thuật ngoại giao cực kỳ khôn khéo của cha ông ta. Bên trong nước, chúng ta xưng \"Đế\" (ngang hàng với phương Bắc, khẳng định độc lập hoàn toàn), nhưng khi giao thiệp với họ lại nhún nhường xưng \"Vương\" để giữ thể diện cho nước lớn, từ đó tránh được họa binh đao, giữ gìn hòa bình cho bá tánh."
+  },
+  {
+    "id": 2,
+    "question": "Yếu tố nào trong văn hóa ứng xử của người Việt (vừa cương vừa nhu, linh hoạt như nước) là cơ sở cho phương pháp ngoại giao nào của Bác sau này?",
+    "options": [
+      "Ngoại giao Tâm công (đánh vào lòng người)",
+      "Ngoại giao Pháo hạm",
+      "Ngoại giao Kinh tế",
+      "Ngoại giao Cưỡng bách"
+    ],
+    "answer": "Ngoại giao Tâm công (đánh vào lòng người)",
+    "explanation": "Người Việt Nam trọng tình nghĩa. Bác Hồ đã nâng tầm nét văn hóa này thành nghệ thuật \"tâm công\". Bác không dùng bạo lực áp đảo mà dùng lẽ phải, tình người để thuyết phục, làm cho kẻ thù tự nhận ra sai lầm, từ đó khuất phục họ từ trong tư tưởng."
+  },
+  {
+    "id": 3,
+    "question": "Trong quá trình bôn ba, Hồ Chí Minh đã tiếp thu những tinh hoa nào từ văn hóa phương Đông để làm phong phú tư duy ngoại giao của mình?",
+    "options": [
+      "Nho giáo, Phật giáo và Binh pháp Tôn Tử.",
+      "Tư tưởng tiểu nông",
+      "Tâm lý an phận",
+      "Chủ nghĩa cá nhân"
+    ],
+    "answer": "Nho giáo, Phật giáo và Binh pháp Tôn Tử.",
+    "explanation": "Tư tưởng ngoại giao của Bác là sự hội tụ tuyệt vời: Bác lấy sự từ bi, vị tha của Phật giáo; lấy triết lý tu thân, tề gia của Nho giáo; và lấy nghệ thuật \"biết người biết ta, trăm trận trăm thắng\" của Binh pháp Tôn Tử để làm vốn liếng đối ngoại."
+  },
+  {
+    "id": 4,
+    "question": "Bác đã tiếp thu lý tưởng \"Tự do - Bình đẳng - Bác ái\" từ cuộc cách mạng tư sản của các quốc gia phương Tây nào?",
+    "options": [
+      "Mỹ và Pháp",
+      "Anh và Đức",
+      "Ý và Tây Ban Nha"
+    ],
+    "answer": "Mỹ và Pháp",
+    "explanation": "Dù chống lại thực dân, đế quốc, nhưng Bác rất trân trọng những giá trị tiến bộ của nhân dân họ. \"Tự do, bình đẳng, bác ái\" là khẩu hiệu nổi tiếng của Cách mạng Pháp, cùng với tinh thần dân chủ của Cách mạng Mỹ, đã được Bác chắt lọc để đưa vào hành trang cứu nước."
+  },
+  {
+    "id": 5,
+    "question": "Qua quan sát ngoại giao Xô Viết và mâu thuẫn giữa các nước đế quốc, Bác đã đúc rút được nghệ thuật quan trọng nào trong đàm phán?",
+    "options": [
+      "Nghệ thuật nhân nhượng có nguyên tắc",
+      "Thỏa hiệp vô điều kiện",
+      "Đối đầu trực diện",
+      "Cô lập hóa quốc tế."
+    ],
+    "answer": "Nghệ thuật nhân nhượng có nguyên tắc",
+    "explanation": "Bác hiểu rằng đàm phán không phải là cứ cứng nhắc đối đầu. Ta có thể lùi một bước để tiến hai bước. Sự nhân nhượng sẽ giúp ta tranh thủ thời gian, khoét sâu mâu thuẫn nội bộ của địch, nhưng tuyệt đối không bao giờ được đánh đổi nguyên tắc cốt lõi là độc lập, chủ quyền."
+  },
+  {
+    "id": 6,
+    "question": "\"Bản yêu sách của nhân dân An Nam\" (1919) gửi tới Hội nghị Versailles đòi quyền tự do, bình đẳng là minh chứng cho việc Người đã vận dụng điều gì vào thực tiễn?",
+    "options": [
+      "Quyền tự quyết của các dân tộc.",
+      "Quyền bảo hộ của thực dân",
+      "Quyền cai trị phong kiến"
+    ],
+    "answer": "Quyền tự quyết của các dân tộc.",
+    "explanation": "Hội nghị Versailles lúc bấy giờ đang rao giảng về \"quyền tự quyết\" do Tổng thống Mỹ Woodrow Wilson xướng lên. Bác đã dùng chính \"gậy ông đập lưng ông\", lấy nguyên lý của phương Tây để đòi lại quyền lợi chính đáng cho dân tộc Việt Nam."
+  },
+  {
+    "id": 7,
+    "question": "\"Sợi chỉ đỏ\" xuyên suốt bản sắc dân tộc, tạo sức mạnh cho ngoại giao Việt Nam là gì?",
+    "options": [
+      "Lòng yêu nước nồng nàn và ý chí tự cường dân tộc.",
+      "Tư tưởng đại dân tộc và bành trướng lãnh thổ",
+      "Sự phụ thuộc vào các quốc gia đồng minh lớn"
+    ],
+    "answer": "Lòng yêu nước nồng nàn và ý chí tự cường dân tộc.",
+    "explanation": "Đây chính là cội nguồn của mọi sức mạnh. Dù đối mặt với kẻ thù mạnh đến đâu, trên bàn đàm phán khó khăn thế nào, lòng yêu nước chính là ngọn lửa giữ cho lập trường ngoại giao của chúng ta luôn kiên định."
+  },
+  {
+    "id": 8,
+    "question": "Lý tưởng nào của cách mạng tư sản phương Tây thu hút Bác từ khi còn ở trong nước?",
+    "options": [
+      "Tự do - Bình đẳng - Bác ái",
+      "Chủ nghĩa thực dân và khai hóa văn minh",
+      "Quyền lợi cá nhân và cạnh tranh tự do"
+    ],
+    "answer": "Tự do - Bình đẳng - Bác ái",
+    "explanation": "Ngay từ khi còn học ở trường Quốc học Huế, người thanh niên Nguyễn Tất Thành đã rất tò mò về những từ ngữ này ẩn giấu đằng sau lá cờ của nước Pháp. Chính khao khát muốn tìm hiểu ý nghĩa thực sự của \"Tự do - Bình đẳng - Bác ái\" đã thôi thúc Người sang tận phương Tây."
+  },
+  {
+    "id": 9,
+    "question": "Bản yêu sách năm 1919 dựa trên nguyên tắc nào của các cường quốc lúc bấy giờ?",
+    "options": [
+      "Quyền tự quyết của các dân tộc",
+      "Quyền duy trì thuộc địa của các nước đế quốc",
+      "Quyền can thiệp nhân đạo quốc tế"
+    ],
+    "answer": "Quyền tự quyết của các dân tộc",
+    "explanation": "Như đã nhắc ở trên, Bản Yêu sách 8 điểm là một nước cờ ngoại giao điệu nghệ, tận dụng ngay nguyên tắc \"Quyền tự quyết\" đang được các cường quốc bàn thảo sôi nổi thời hậu Thế chiến thứ nhất để gây tiếng vang quốc tế."
+  },
+  {
+    "id": 10,
+    "question": "Bác tiếp thu tư tưởng quyền con người từ Tuyên ngôn của những nước nào?",
+    "options": [
+      "Mỹ (1776) và Pháp (1791)",
+      "Anh (1215) và Đức (1919)",
+      "Nga (1917) và Nhật Bản (1868)"
+    ],
+    "answer": "Mỹ (1776) và Pháp (1791)",
+    "explanation": "Ngay trong đoạn mở đầu Tuyên ngôn Độc lập 1945, Bác đã trích dẫn trực tiếp Tuyên ngôn Độc lập của Mỹ (1776) và Tuyên ngôn Nhân quyền và Dân quyền của Cách mạng Pháp. Bác đã nâng tầm \"quyền con người\" của phương Tây thành \"quyền của mọi dân tộc\" trên thế giới."
+  },
+  {
+    "id": 11,
+    "question": "Đâu là cơ sở lý luận nền tảng và mang tính bước ngoặt, quyết định bản chất cách mạng trong tư tưởng ngoại giao Hồ Chí Minh?",
+    "options": [
+      "Tinh hoa văn hóa phương Đông",
+      "Chủ nghĩa Mác - Lênin",
+      "Tư tưởng dân chủ tư sản Pháp, Mỹ"
+    ],
+    "answer": "Chủ nghĩa Mác - Lênin",
+    "explanation": "Nếu chủ nghĩa yêu nước là động lực, thì Chủ nghĩa Mác - Lênin là \"kim chỉ nam\". Việc tiếp thu lý luận này đã giúp Bác kết nối ngoại giao Việt Nam với phong trào cách mạng thế giới, tạo ra một bước ngoặt chưa từng có trong lịch sử đấu tranh của nước ta."
+  },
+  {
+    "id": 12,
+    "question": "Quá trình bôn ba tìm đường cứu nước qua nhiều châu lục (từ 1911 đến 1941) đã đóng góp trực tiếp vào cơ sở nào của tư tưởng ngoại giao Hồ Chí Minh?",
+    "options": [
+      "Quá trình phát triển kinh tế thị trường",
+      "Thực tiễn hoạt động cách mạng quốc tế",
+      "Sự hình thành chủ nghĩa yêu nước"
+    ],
+    "answer": "Thực tiễn hoạt động cách mạng quốc tế",
+    "explanation": "30 năm bôn ba qua 4 châu lục, 3 đại dương không chỉ là hành trình tìm đường, mà còn là trường học thực tiễn vĩ đại giúp Bác rèn luyện bản lĩnh, thấu hiểu tình hình thế giới."
+  },
+  {
+    "id": 13,
+    "question": "Trong việc tiếp thu tinh hoa văn hóa nhân loại để hình thành tư tưởng ngoại giao, Hồ Chí Minh đã chắt lọc yếu tố tích cực nào từ văn hóa phương Đông?",
+    "options": [
+      "Tư tưởng tự do, bình đẳng, bác ái",
+      "Triết lý hòa hiếu, trọng tình nghĩa, \"dĩ hòa vi quý\"",
+      "Tư tưởng về quyền con người và dân chủ"
+    ],
+    "answer": "Triết lý hòa hiếu, trọng tình nghĩa, \"dĩ hòa vi quý\"",
+    "explanation": "Chữ \"hòa\" trong triết lý phương Đông được Bác sử dụng làm nền tảng để luôn tìm kiếm các giải pháp đàm phán hòa bình, giảm thiểu đổ máu, thể hiện sự bao dung và tình yêu chuộng hòa bình của dân tộc Việt Nam."
+  },
+  {
+    "id": 14,
+    "question": "Theo tư tưởng ngoại giao Hồ Chí Minh, lợi ích cốt lõi nhất khi thực hiện các hoạt động đối ngoại, bắt nguồn từ Chủ nghĩa yêu nước là gì?",
+    "options": [
+      "Mở rộng lãnh thổ và tầm ảnh hưởng",
+      "Độc lập dân tộc gắn liền với tự do, hạnh phúc của nhân dân",
+      "Trở thành cường quốc quân sự trong khu vực"
+    ],
+    "answer": "Độc lập dân tộc gắn liền với tự do, hạnh phúc của nhân dân",
+    "explanation": "Độc lập mà nhân dân không được tự do, hạnh phúc thì độc lập cũng chẳng có ý nghĩa gì. Mọi nỗ lực ngoại giao của Bác đều hướng tới một cái đích duy nhất: Đất nước tự do, đồng bào ấm no."
+  },
+  {
+    "id": 15,
+    "question": "Nhờ tiếp thu Chủ nghĩa Mác - Lênin, Hồ Chí Minh đã nhận ra cần phải kết hợp sức mạnh dân tộc với sức mạnh nào để giành thắng lợi trên mặt trận ngoại giao?",
+    "options": [
+      "Sức mạnh của các liên minh kinh tế tư bản",
+      "Sức mạnh của thời đại (phong trào cách mạng thế giới)",
+      "Sức mạnh quân sự của các nước đế quốc"
+    ],
+    "answer": "Sức mạnh của thời đại (phong trào cách mạng thế giới)",
+    "explanation": "\"Sức mạnh dân tộc\" cộng hưởng cùng \"sức mạnh thời đại\" (sự ủng hộ của bè bạn quốc tế) là công thức thành công vang dội của ngoại giao Việt Nam, giúp chúng ta vượt qua những kẻ thù mạnh nhất."
+  },
+  {
+    "id": 16,
+    "question": "Tư tưởng cốt lõi xuyên suốt trong đường lối ngoại giao Hồ Chí Minh, được đúc kết từ mọi cơ sở lý luận và thực tiễn, là gì?",
+    "options": [
+      "Dĩ bất biến, ứng vạn biến",
+      "Không có gì quý hơn độc lập, tự do",
+      "Thêm bạn bớt thù"
+    ],
+    "answer": "Không có gì quý hơn độc lập, tự do",
+    "explanation": "Dù chiến thuật có mềm dẻo, linh hoạt đến đâu, mọi hoạt động ngoại giao đều phải xoay quanh trục vĩnh cửu này. Đây là chân lý sáng ngời và là mệnh lệnh từ trái tim của Người."
+  },
+  {
+    "id": 17,
+    "question": "Từ thực tiễn bôn ba nước ngoài và quan sát các phong trào cách mạng thế giới, Hồ Chí Minh đã rút ra bài học cốt lõi nào về nguyên tắc xây dựng lực lượng trước khi đàm phán ngoại giao?",
+    "options": [
+      "Trông chờ vào sự viện trợ của các cường quốc",
+      "\"Đem sức ta mà tự giải phóng cho ta\" (Tự lực cánh sinh)",
+      "Ký kết các hiệp ước liên minh quân sự ngay lập tức"
+    ],
+    "answer": "\"Đem sức ta mà tự giải phóng cho ta\" (Tự lực cánh sinh)",
+    "explanation": "Ngoại giao không thể mạnh nếu trong nước yếu. Bác quan niệm \"Thực lực là cái chiêng, ngoại giao là cái tiếng\". Phải tự lực cánh sinh, tự mình đứng vững trước thì tiếng nói trên bàn đàm phán mới có trọng lượng."
+  },
+  {
+    "id": 18,
+    "question": "Việc bản Yêu sách 8 điểm gửi Hội nghị Versailles (1919) bị phớt lờ đã giúp Nguyễn Ái Quốc rút ra một kết luận mang tính bước ngoặt về nền tảng ngoại giao. Kết luận đó là gì?",
+    "options": [
+      "Phải dựa vào sự giúp đỡ của các nước đế quốc khác để đánh Pháp",
+      "Không thể trông chờ vào lòng tốt của chủ nghĩa đế quốc, các dân tộc phải tự đứng lên giải phóng mình",
+      "Cần phải nhượng bộ nhiều hơn để các nước lớn chấp thuận"
+    ],
+    "answer": "Không thể trông chờ vào lòng tốt của chủ nghĩa đế quốc, các dân tộc phải tự đứng lên giải phóng mình",
+    "explanation": "Sự kiện Versailles dội một gáo nước lạnh vào những ảo tưởng về sự \"ban phát\" dân chủ. Từ đó, Bác rút ra bài học xương máu: Độc lập không phải là món quà cầu xin, mà phải giành lấy bằng chính thực lực của dân tộc."
+  },
+  {
+    "id": 19,
+    "question": "Cuốn sách \"Tư tưởng ngoại giao Hồ Chí Minh\" nhấn mạnh, Bác Hồ đã kế thừa tinh hoa văn hóa dân tộc và nhân loại để nâng tầm ngoại giao Việt Nam lên một tầm cao mới bằng cách biến hoạt động đối ngoại thành hoạt động gì?",
+    "options": [
+      "Ngoại giao tình báo chiến lược",
+      "Ngoại giao văn hóa (dùng sức mạnh văn hóa để thuyết phục nhân tâm)",
+      "Ngoại giao pháo hạm (phô trương sức mạnh quân sự)"
+    ],
+    "answer": "Ngoại giao văn hóa (dùng sức mạnh văn hóa để thuyết phục nhân tâm)",
+    "explanation": "Bác dùng thơ ca, nụ cười, sự am hiểu phong tục tập quán để phá băng những căng thẳng chính trị. Chính sức hút từ một \"Danh nhân văn hóa thế giới\" đã cảm hóa rất nhiều chính khách phương Tây."
+  },
+  {
+    "id": 20,
+    "question": "Kế thừa truyền thống ngoại giao và nghệ thuật giữ nước của cha ông, tư tưởng ngoại giao Hồ Chí Minh luôn đặc biệt chú trọng việc đánh giá chính xác 3 yếu tố cốt lõi nào để đưa ra quyết sách đối ngoại?",
+    "options": [
+      "Tiền - Quyền - Lực",
+      "Nhu - Cương - Biến",
+      "Thời - Thế - Lực"
+    ],
+    "answer": "Thời - Thế - Lực",
+    "explanation": "\"Thời\" là thời cơ lịch sử; \"Thế\" là vị thế chính trị; \"Lực\" là sức mạnh kinh tế, quân sự. Việc phân tích chuẩn xác ba trụ cột này là chìa khóa để nền ngoại giao Việt Nam luôn chủ động trên mọi mặt trận."
+  },
+  {
+    "id": 21,
+    "question": "Tháng 9/1946, khi Hội nghị Fontainebleau tại Pháp đổ vỡ, nguy cơ chiến tranh Pháp - Việt bùng nổ ngay lập tức. Giữa đêm khuya ngày 14/9, Chủ tịch Hồ Chí Minh đã chủ động đến nhà riêng của Bộ trưởng Thuộc địa Pháp (Marius Moutet) để ký bản Tạm ước 14/9. Quyết định táo bạo này là minh chứng kinh điển cho phương châm nào?",
+    "options": [
+      "Mượn gió bẻ măng",
+      "Tọa sơn quan hổ đấu",
+      "Dĩ bất biến, ứng vạn biến"
+    ],
+    "answer": "Dĩ bất biến, ứng vạn biến",
+    "explanation": "Mục tiêu vĩnh cửu không thay đổi là nền Độc lập (Bất biến). Nhưng để bảo vệ cái gốc đó, Bác sẵn sàng nhân nhượng, linh hoạt ký Tạm ước ngay trong đêm (Vạn biến) nhằm mưu cầu hòa bình, tranh thủ từng phút giây để đất nước chuẩn bị lực lượng."
+  }
+]
