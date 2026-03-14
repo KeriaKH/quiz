@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 
 type Question = {
   id: number;
@@ -11,13 +11,71 @@ type Question = {
   explanation: string;
 };
 
+type ThemeKey = "red" | "blue" | "green";
+
+const THEME_PALETTE: Record<ThemeKey, { page: string; panel: string; panelDark: string; card: string }> = {
+  red: {
+    page: "#b3272f",
+    panel: "#7a0f1f",
+    panelDark: "#5a0814",
+    card: "#a61026",
+  },
+  blue: {
+    page: "#1f3f8f",
+    panel: "#173170",
+    panelDark: "#10224f",
+    card: "#2563eb",
+  },
+  green: {
+    page: "#1f6a3a",
+    panel: "#1b5a34",
+    panelDark: "#123b23",
+    card: "#22c55e",
+  },
+};
+
+const ANSWER_PALETTE = [
+  { from: "#ef4444", to: "#b91c1c", text: "#fff7d4" },
+  { from: "#2563eb", to: "#1e40af", text: "#eff6ff" },
+  { from: "#22c55e", to: "#166534", text: "#ecfdf5" },
+  { from: "#facc15", to: "#ca8a04", text: "#3f2b00" },
+];
+
+const QUESTION_CARD_CLASS =
+  "h-60 w-40 rounded-xl border p-4 text-center text-[#fff7d4] shadow-[0_10px_24px_rgba(0,0,0,0.28)] transition-all duration-200 hover:-translate-y-1 sm:h-64 sm:w-44 md:h-72 md:w-48";
+
+const OPTION_CARD_CLASS =
+  "group relative flex min-h-52 w-full max-w-[26rem] items-center justify-center overflow-hidden rounded-xl border text-center text-[clamp(1.25rem,1.9vw,2.2rem)] font-semibold leading-snug shadow-[0_10px_24px_rgba(0,0,0,0.35)] transition-all duration-200";
+
+const getThemeFromRotation = (rotation: number): ThemeKey => {
+  const normalized = ((rotation % 360) + 360) % 360;
+  // Conic gradients start at the top (0deg). The pointer is fixed at the top,
+  // so we read the wheel angle under pointer by reversing wheel rotation.
+  const pointerAngle = (360 - normalized) % 360;
+
+  if (pointerAngle < 120) {
+    return "red";
+  }
+
+  if (pointerAngle < 240) {
+    return "blue";
+  }
+
+  return "green";
+};
+
 export default function Home() {
-  const photos = [1, 2, 3];
   const [hasStarted, setHasStarted] = useState(false);
   const [questions, setQuestions] = useState<Question[]>([]);
+  const [showQuestionBoard, setShowQuestionBoard] = useState(false);
+  const [activeTheme, setActiveTheme] = useState<ThemeKey>("red");
   const [selectedQuestion, setSelectedQuestion] = useState<Question | null>(null);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [isAnswered, setIsAnswered] = useState(false);
+  const [isSpinning, setIsSpinning] = useState(false);
+  const [wheelRotation, setWheelRotation] = useState(0);
+
+  const activePalette = THEME_PALETTE[activeTheme];
 
   useEffect(() => {
     const loadQuestions = async () => {
@@ -29,13 +87,30 @@ export default function Home() {
     void loadQuestions();
   }, []);
 
-  const openRandomQuestion = () => {
-    if (questions.length === 0) {
+  const spinWheel = () => {
+    if (questions.length === 0 || isSpinning) {
       return;
     }
 
-    const randomIndex = Math.floor(Math.random() * questions.length);
-    setSelectedQuestion(questions[randomIndex]);
+    setIsSpinning(true);
+    const extraTurns = 5 + Math.floor(Math.random() * 4);
+    const randomStop = Math.floor(Math.random() * 360);
+    const spinDelta = extraTurns * 360 + randomStop;
+
+    setWheelRotation((prev) => {
+      const nextRotation = prev + spinDelta;
+      setActiveTheme(getThemeFromRotation(nextRotation));
+      return nextRotation;
+    });
+
+    setTimeout(() => {
+      setIsSpinning(false);
+      setShowQuestionBoard(true);
+    }, 4200);
+  };
+
+  const openQuestionCard = (question: Question) => {
+    setSelectedQuestion(question);
     setSelectedOption(null);
     setIsAnswered(false);
   };
@@ -49,29 +124,50 @@ export default function Home() {
     setIsAnswered(true);
   };
 
-  const backToHome = () => {
+  const backToQuestionBoard = () => {
     setSelectedQuestion(null);
     setSelectedOption(null);
     setIsAnswered(false);
+    setShowQuestionBoard(false);
   };
 
-  const getOptionClassName = (option: string) => {
-    const baseClass =
-      "w-full rounded-md border px-4 py-3 text-left font-semibold transition-colors duration-200";
+  const questionCards = questions.slice(0, 7);
+  const questionCardRows = [questionCards.slice(0, 4), questionCards.slice(4, 7)];
 
-    if (!selectedQuestion || !isAnswered) {
-      return `${baseClass} border-[#f7dd5f] bg-black/15 text-[#fff1b5] hover:bg-black/30`;
+  const questionCardStyle: CSSProperties = {
+    background: `linear-gradient(180deg, ${activePalette.card}, ${activePalette.panel})`,
+    borderColor: "#f7dd5f",
+  };
+
+  const getOptionStyle = (option: string, index: number): CSSProperties => {
+    const palette = ANSWER_PALETTE[index % ANSWER_PALETTE.length];
+    const isCorrect = option === selectedQuestion?.answer;
+    const isPicked = option === selectedOption;
+
+    if (isAnswered && isCorrect) {
+      return {
+        background: "linear-gradient(180deg, #22c55e, #166534)",
+        borderColor: "#f7dd5f",
+        color: "#ecfdf5",
+        opacity: 1,
+      };
     }
 
-    if (option === selectedQuestion.answer) {
-      return `${baseClass} border-emerald-300 bg-emerald-600/35 text-emerald-100`;
+    if (isAnswered && isPicked) {
+      return {
+        background: "linear-gradient(180deg, #ef4444, #b91c1c)",
+        borderColor: "#f7dd5f",
+        color: "#fff7d4",
+        opacity: 1,
+      };
     }
 
-    if (option === selectedOption) {
-      return `${baseClass} border-rose-300 bg-rose-700/35 text-rose-100`;
-    }
-
-    return `${baseClass} border-[#f7dd5f]/50 bg-black/10 text-[#f4e4aa]/70`;
+    return {
+      background: `linear-gradient(180deg, ${palette.from}, ${palette.to})`,
+      borderColor: "#f7dd5f",
+      color: palette.text,
+      opacity: isAnswered ? 0.45 : 1,
+    };
   };
 
   return (
@@ -110,68 +206,126 @@ export default function Home() {
           </div>
         </section>
       ) : (
-      <section className="mx-auto min-h-[92vh] w-full bg-[#b3272f] px-4 py-8 sm:px-8 md:px-10 md:py-10">
-        <h1 className="text-center text-[clamp(1.35rem,2.6vw,2.85rem)] font-black uppercase tracking-wide text-[#f7dd5f]">
-          GIẢI MÃ NỀN TẢNG TƯ TƯỞNG HỒ CHÍ MINH
-        </h1>
+      <section
+        className="relative mx-auto min-h-[92vh] w-full overflow-hidden px-4 py-8 sm:px-8 md:px-10 md:py-10 bg-[#b3272f]"
+      >
+        {selectedQuestion ? (
+          <>
+            <div className="pointer-events-none absolute inset-0 opacity-25 [background:radial-gradient(circle_at_18%_18%,rgba(255,230,153,0.16),transparent_32%),radial-gradient(circle_at_85%_10%,rgba(122,15,31,0.35),transparent_35%),radial-gradient(circle_at_72%_80%,rgba(90,8,20,0.3),transparent_40%)]" />
+            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(247,221,95,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(247,221,95,0.12)_1px,transparent_1px)] bg-size-[180px_180px] opacity-10" />
+          </>
+        ) : null}
 
         {!selectedQuestion ? (
-          <ul className="mx-auto mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:mt-20 lg:grid-cols-3 lg:gap-10">
-            {photos.map((photoNumber) => (
-              <li key={photoNumber} className="group text-center">
-                <p className="mb-2 inline-flex rounded-full border border-[#f7dd5f] bg-black/15 px-4 py-1 text-sm font-bold tracking-wide text-[#f7dd5f] transition-transform duration-300 group-hover:scale-105">
-                  Câu {photoNumber}
-                </p>
+          <h1 className="text-center text-[clamp(1.35rem,2.6vw,2.85rem)] font-black uppercase tracking-wide text-[#f7dd5f]">
+            GIẢI MÃ NỀN TẢNG TƯ TƯỞNG HỒ CHÍ MINH
+          </h1>
+        ) : null}
 
-                <button
-                  type="button"
-                  onClick={openRandomQuestion}
-                  className="w-full cursor-pointer overflow-hidden rounded-md bg-black/20 shadow-[0_8px_20px_rgba(0,0,0,0.35)] transition-all duration-300 group-hover:border-[#f7dd5f] group-hover:shadow-[0_14px_32px_rgba(0,0,0,0.48)]"
-                >
-                  <Image
-                    src="/i1.png"
-                    alt={`Hình ${photoNumber}`}
-                    width={720}
-                    height={800}
-                    priority={photoNumber === 1}
-                    className="h-[380px] w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.03] sm:h-[450px] lg:h-[420px]"
-                  />
-                </button>
-              </li>
+        {!showQuestionBoard ? (
+          <div className="mx-auto mt-10 flex w-full max-w-3xl flex-col items-center gap-6 rounded-xl border border-[#f7dd5f]/70 bg-black/15 p-6 text-center sm:mt-16 sm:p-8">
+            <p className="mb-2 text-sm font-bold uppercase tracking-wide text-[#f7dd5f]">Vòng quay ngẫu nhiên</p>
+
+            <div className="relative h-72 w-72 sm:h-80 sm:w-80">
+              <div className="absolute left-1/2 top-[-7%] z-20 h-0 w-0 -translate-x-1/2 border-l-14 border-r-14 border-t-24 border-l-transparent border-r-transparent border-t-[#f7dd5f]" />
+
+              <div
+                className="relative h-full w-full rounded-full border-8 border-[#f7dd5f] shadow-[0_10px_24px_rgba(0,0,0,0.35)]"
+                style={{
+                  transform: `rotate(${wheelRotation}deg)`,
+                  transition: isSpinning ? "transform 4.2s cubic-bezier(0.2, 0.85, 0.2, 1)" : "none",
+                  background:
+                    "conic-gradient(#ef4444 0deg 120deg, #2563eb 120deg 240deg, #22c55e 240deg 360deg)",
+                }}
+              >
+                <div className="absolute left-1/2 top-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[#7f1d1d] bg-black" />
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={spinWheel}
+              disabled={isSpinning || questions.length === 0}
+              className="rounded-lg border-2 border-[#f7dd5f] bg-[#f7dd5f] px-8 py-3 text-lg font-bold text-[#7f1d1d] transition-colors duration-200 hover:bg-[#ffe98e] disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {isSpinning ? "Đang quay..." : "Quay"}
+            </button>
+          </div>
+        ) : !selectedQuestion ? (
+          <div className="mx-auto mt-6 flex min-h-[76vh] w-full max-w-6xl flex-col justify-center text-[#fff1b5]">
+            {questionCardRows.map((row, rowIndex) => (
+              <div
+                key={`row-${rowIndex}`}
+                className={`${rowIndex === 0 ? "mt-6" : "mt-5"} flex flex-wrap items-center justify-center gap-10 lg:flex-nowrap`}
+              >
+                {row.map((question) => (
+                  <button
+                    key={question.id}
+                    type="button"
+                    onClick={() => openQuestionCard(question)}
+                    className={QUESTION_CARD_CLASS}
+                    style={questionCardStyle}
+                  >
+                    <div className="flex h-full flex-col items-center justify-center rounded-lg border border-white/20">
+                      <p className="text-[1.1rem] font-black uppercase tracking-wider">Câu {question.id}</p>
+                      <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-white/75">Nhấn để mở</p>
+                    </div>
+                  </button>
+                ))}
+              </div>
             ))}
-          </ul>
+          </div>
         ) : (
-          <div className="mx-auto mt-10 w-full max-w-3xl rounded-xl border border-[#f7dd5f]/80 bg-black/20 p-5 text-[#fff1b5] shadow-[0_8px_24px_rgba(0,0,0,0.35)] sm:p-7">
-            <p className="text-sm font-bold uppercase tracking-wide text-[#f7dd5f]">Câu hỏi ngẫu nhiên</p>
-            <h2 className="mt-2 text-xl font-bold leading-relaxed">{selectedQuestion.question}</h2>
+          <div className="relative z-10">
+            <div
+              className="mx-auto mt-3 w-full max-w-5xl rounded-xl border px-5 py-6 text-center text-[#fff7d4] shadow-[0_12px_28px_rgba(0,0,0,0.45)] sm:px-8"
+              style={{ backgroundColor: `#7a0f1fe8`, borderColor: "#f7dd5f" }}
+            >
+              <span
+                className="inline-flex rounded-full border px-3 py-1 text-sm font-bold"
+                style={{ backgroundColor: `#5a081459`, borderColor: "#f7dd5f", color: "#f7dd5f" }}
+              >
+                Câu hỏi
+              </span>
+              <h2 className="mt-3 text-[clamp(1.4rem,2.8vw,2.1rem)] font-semibold leading-relaxed">
+                {selectedQuestion.question}
+              </h2>
+            </div>
 
-            <div className="mt-6 space-y-3">
-              {selectedQuestion.options.map((option) => (
+            <div className="mx-auto mt-10 flex w-full max-w-450 flex-wrap items-stretch justify-center gap-5">
+              {selectedQuestion.options.map((option, index) => (
                 <button
                   key={option}
                   type="button"
                   disabled={isAnswered}
                   onClick={() => chooseOption(option)}
-                  className={getOptionClassName(option)}
+                  className={OPTION_CARD_CLASS}
+                  style={getOptionStyle(option, index)}
                 >
-                  {option}
+                  <span
+                    className="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-md border text-base font-semibold"
+                    style={{ borderColor: "#f7dd5f99", backgroundColor: "#5a081459", color: "#f7dd5f" }}
+                  >
+                    {index + 1}
+                  </span>
+                  <span className="px-6">{option}</span>
                 </button>
               ))}
             </div>
 
             {isAnswered ? (
-              <div className="mt-6 rounded-lg border border-[#f7dd5f]/60 bg-black/20 p-4">
-                <p className="text-base font-bold text-[#f7dd5f]">
-                  Đáp án đúng: <span className="text-emerald-200">{selectedQuestion.answer}</span>
+              <div className="mx-auto mt-8 w-full max-w-5xl rounded-xl border border-white/20 bg-black/40 p-5 text-white shadow-[0_10px_24px_rgba(0,0,0,0.35)] sm:p-6">
+                <p className="text-base font-bold text-yellow-300">
+                  Đáp án đúng: <span className="text-emerald-300">{selectedQuestion.answer}</span>
                 </p>
-                <p className="mt-3 leading-relaxed text-[#fff4c8]">{selectedQuestion.explanation}</p>
+                <p className="mt-3 leading-relaxed text-zinc-100">{selectedQuestion.explanation}</p>
 
                 <button
                   type="button"
-                  onClick={backToHome}
-                  className="mt-6 rounded-md border border-[#f7dd5f] bg-[#f7dd5f] px-5 py-2 font-bold text-[#7f1d1d] transition-colors duration-200 hover:bg-[#ffe98e]"
+                  onClick={backToQuestionBoard}
+                  className="mt-6 rounded-md border border-yellow-300 bg-yellow-300 px-5 py-2 font-bold text-[#4a002f] transition-colors duration-200 hover:bg-yellow-200"
                 >
-                  Về trang chủ
+                  Quay lại danh sách
                 </button>
               </div>
             ) : null}
