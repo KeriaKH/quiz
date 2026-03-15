@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 
 type Question = {
   id: number;
@@ -47,6 +47,9 @@ const QUESTION_CARD_CLASS =
 const OPTION_CARD_CLASS =
   "group relative flex min-h-52 w-full max-w-[26rem] items-center justify-center overflow-hidden rounded-xl border text-center text-[clamp(1.25rem,1.9vw,2.2rem)] font-semibold leading-snug shadow-[0_10px_24px_rgba(0,0,0,0.35)] transition-all duration-200";
 
+const CORRECT_SOUND_URL = "/correct.mp3";
+const WRONG_SOUND_URL = "/wrong.mp3";
+
 const getThemeFromRotation = (rotation: number): ThemeKey => {
   const normalized = ((rotation % 360) + 360) % 360;
   // Conic gradients start at the top (0deg). The pointer is fixed at the top,
@@ -66,6 +69,8 @@ const getThemeFromRotation = (rotation: number): ThemeKey => {
 
 export default function Home() {
   const [hasStarted, setHasStarted] = useState(false);
+  const [playerName, setPlayerName] = useState("");
+  const [turnCount, setTurnCount] = useState(0);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [showQuestionBoard, setShowQuestionBoard] = useState(false);
   const [activeTheme, setActiveTheme] = useState<ThemeKey>("red");
@@ -76,6 +81,29 @@ export default function Home() {
   const [wheelRotation, setWheelRotation] = useState(0);
 
   const activePalette = THEME_PALETTE[activeTheme];
+  const correctAudioRef = useRef<HTMLAudioElement | null>(null);
+  const wrongAudioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    correctAudioRef.current = new Audio(CORRECT_SOUND_URL);
+    wrongAudioRef.current = new Audio(WRONG_SOUND_URL);
+    correctAudioRef.current.preload = "auto";
+    wrongAudioRef.current.preload = "auto";
+    correctAudioRef.current.volume = 0.7;
+    wrongAudioRef.current.volume = 0.7;
+  }, []);
+
+  useEffect(() => {
+    const savedTurnCount = window.localStorage.getItem("quiz_turn_count");
+    if (!savedTurnCount) {
+      return;
+    }
+
+    const parsedTurnCount = Number(savedTurnCount);
+    if (Number.isFinite(parsedTurnCount) && parsedTurnCount >= 0) {
+      setTurnCount(parsedTurnCount);
+    }
+  }, []);
 
   useEffect(() => {
     const loadQuestions = async () => {
@@ -88,11 +116,20 @@ export default function Home() {
   }, []);
 
   const spinWheel = () => {
-    if (questions.length === 0 || isSpinning) {
+    if (questions.length === 0 || isSpinning || playerName.trim().length === 0) {
       return;
     }
 
     setIsSpinning(true);
+    const nextTurnCount = turnCount + 1;
+    setTurnCount(nextTurnCount);
+    window.localStorage.setItem("quiz_turn_count", String(nextTurnCount));
+
+    const historyRaw = window.localStorage.getItem("quiz_turn_history");
+    const history = historyRaw ? (JSON.parse(historyRaw) as Array<{ name: string; playedAt: string }>) : [];
+    history.push({ name: playerName.trim(), playedAt: new Date().toISOString() });
+    window.localStorage.setItem("quiz_turn_history", JSON.stringify(history));
+
     const extraTurns = 5 + Math.floor(Math.random() * 4);
     const randomStop = Math.floor(Math.random() * 360);
     const spinDelta = extraTurns * 360 + randomStop;
@@ -122,6 +159,15 @@ export default function Home() {
 
     setSelectedOption(option);
     setIsAnswered(true);
+
+    const isCorrect = option === selectedQuestion.answer;
+    const audio = isCorrect ? correctAudioRef.current : wrongAudioRef.current;
+    if (audio) {
+      audio.currentTime = 0;
+      void audio.play().catch((error) => {
+        console.error("Khong the phat am thanh:", error);
+      });
+    }
   };
 
   const backToQuestionBoard = () => {
@@ -129,10 +175,14 @@ export default function Home() {
     setSelectedOption(null);
     setIsAnswered(false);
     setShowQuestionBoard(false);
+    setPlayerName("");
   };
 
   const questionCards = questions.slice(0, 7);
   const questionCardRows = [questionCards.slice(0, 4), questionCards.slice(4, 7)];
+  const isCurrentAnswerCorrect = Boolean(
+    selectedQuestion && selectedOption && selectedOption === selectedQuestion.answer,
+  );
 
   const questionCardStyle: CSSProperties = {
     background: `linear-gradient(180deg, ${activePalette.card}, ${activePalette.panel})`,
@@ -195,6 +245,10 @@ export default function Home() {
                 Tư tưởng ngoại giao Hồ Chí Minh
               </h1>
 
+              <p className="rounded-md border border-yellow-300/70 bg-black/25 px-4 py-2 text-sm font-semibold text-[#fff1b5] sm:text-base">
+                Tổng lượt tham gia : {turnCount}
+              </p>
+
               <button
                 type="button"
                 onClick={() => setHasStarted(true)}
@@ -224,7 +278,23 @@ export default function Home() {
 
         {!showQuestionBoard ? (
           <div className="mx-auto mt-10 flex w-full max-w-3xl flex-col items-center gap-6 rounded-xl border border-[#f7dd5f]/70 bg-black/15 p-6 text-center sm:mt-16 sm:p-8">
-            <p className="mb-2 text-sm font-bold uppercase tracking-wide text-[#f7dd5f]">Vòng quay ngẫu nhiên</p>
+            
+            <div className="w-full max-w-md text-left">
+              <label htmlFor="playerName" className="mb-2 block text-sm font-bold uppercase tracking-wide text-[#f7dd5f]">
+                Nhập tên người chơi
+              </label>
+              <input
+                id="playerName"
+                type="text"
+                value={playerName}
+                onChange={(event) => setPlayerName(event.target.value)}
+                placeholder="Ví dụ: Nguyễn Văn A"
+                className="w-full rounded-lg border border-[#f7dd5f] bg-[#5a0814]/60 px-4 py-3 text-base text-[#fff7d4] outline-none placeholder:text-[#ffe7a3]/80 focus:ring-2 focus:ring-[#f7dd5f]/70"
+              />
+            </div>
+            <p className=" mb-2 rounded-md border border-yellow-300/70 bg-black/25 px-4 py-2 text-sm font-semibold text-[#fff1b5] sm:text-base">
+              Tổng lượt tham gia: {turnCount}
+            </p>
 
             <div className="relative h-72 w-72 sm:h-80 sm:w-80">
               <div className="absolute left-1/2 top-[-7%] z-20 h-0 w-0 -translate-x-1/2 border-l-14 border-r-14 border-t-24 border-l-transparent border-r-transparent border-t-[#f7dd5f]" />
@@ -245,14 +315,17 @@ export default function Home() {
             <button
               type="button"
               onClick={spinWheel}
-              disabled={isSpinning || questions.length === 0}
+              disabled={isSpinning || questions.length === 0 || playerName.trim().length === 0}
               className="rounded-lg border-2 border-[#f7dd5f] bg-[#f7dd5f] px-8 py-3 text-lg font-bold text-[#7f1d1d] transition-colors duration-200 hover:bg-[#ffe98e] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isSpinning ? "Đang quay..." : "Quay"}
             </button>
           </div>
         ) : !selectedQuestion ? (
-          <div className="mx-auto mt-6 flex min-h-[76vh] w-full max-w-6xl flex-col justify-center text-[#fff1b5]">
+          <div className="mx-auto flex min-h-[76vh] w-full max-w-6xl flex-col justify-center text-[#fff1b5]">
+            <div className="mx-auto mb-4 inline-flex max-w-fit items-center rounded-full border border-[#f7dd5f]/80 bg-linear-to-r from-[#5a0814]/85 to-[#7a0f1f]/85 px-6 py-2 text-base font-semibold text-[#fff3bf] shadow-[0_8px_20px_rgba(0,0,0,0.28)] sm:text-lg">
+              Mời <span className="mx-1 font-black text-[#f7dd5f]">{playerName || "Người chơi"}</span> chọn một câu hỏi
+            </div>
             {questionCardRows.map((row, rowIndex) => (
               <div
                 key={`row-${rowIndex}`}
@@ -276,7 +349,7 @@ export default function Home() {
             ))}
           </div>
         ) : (
-          <div className="relative z-10">
+          <div className="flex flex-col z-10">
             <div
               className="mx-auto mt-3 w-full max-w-5xl rounded-xl border px-5 py-6 text-center text-[#fff7d4] shadow-[0_12px_28px_rgba(0,0,0,0.45)] sm:px-8"
               style={{ backgroundColor: `#7a0f1fe8`, borderColor: "#f7dd5f" }}
@@ -292,7 +365,7 @@ export default function Home() {
               </h2>
             </div>
 
-            <div className="mx-auto mt-10 flex w-full max-w-450 flex-wrap items-stretch justify-center gap-5">
+            <div className="mx-auto justify-center flex w-full flex-wrap items-center gap-5 mt-20">
               {selectedQuestion.options.map((option, index) => (
                 <button
                   key={option}
@@ -314,19 +387,31 @@ export default function Home() {
             </div>
 
             {isAnswered ? (
-              <div className="mx-auto mt-8 w-full max-w-5xl rounded-xl border border-white/20 bg-black/40 p-5 text-white shadow-[0_10px_24px_rgba(0,0,0,0.35)] sm:p-6">
-                <p className="text-base font-bold text-yellow-300">
-                  Đáp án đúng: <span className="text-emerald-300">{selectedQuestion.answer}</span>
-                </p>
-                <p className="mt-3 leading-relaxed text-zinc-100">{selectedQuestion.explanation}</p>
+              <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/60 px-4">
+                <div className="w-full max-w-2xl rounded-2xl border border-[#f7dd5f]/70 bg-[#6f0f1dd9] p-6 text-white shadow-[0_14px_36px_rgba(0,0,0,0.45)] sm:p-8">
 
-                <button
-                  type="button"
-                  onClick={backToQuestionBoard}
-                  className="mt-6 rounded-md border border-yellow-300 bg-yellow-300 px-5 py-2 font-bold text-[#4a002f] transition-colors duration-200 hover:bg-yellow-200"
-                >
-                  Quay lại danh sách
-                </button>
+                  <h3 className={`${isCurrentAnswerCorrect ? 'text-emerald-400' : 'text-red-400'} text-xl font-bold sm:text-2xl text-center`}>
+                    {isCurrentAnswerCorrect
+                      ? "🎉🎉Bạn đã trả lời chính xác câu hỏi này🎉🎉"
+                      : "❌❌Bạn chưa chọn đúng đáp án ở lượt này❌❌"}
+                  </h3>
+
+                  <p className="mt-4 text-base font-semibold text-yellow-200">
+                    Đáp án đúng: <span className="text-white">{selectedQuestion.answer}</span>
+                  </p>
+
+                  <p className="mt-3 leading-relaxed text-zinc-100">{selectedQuestion.explanation}</p>
+
+                  <div className="mt-7 flex justify-end">
+                    <button
+                      type="button"
+                      onClick={backToQuestionBoard}
+                      className="rounded-md border border-yellow-300 bg-yellow-300 px-5 py-2 font-bold text-[#4a002f] transition-colors duration-200 hover:bg-yellow-200"
+                    >
+                      Quay lại danh sách
+                    </button>
+                  </div>
+                </div>
               </div>
             ) : null}
           </div>
