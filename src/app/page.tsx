@@ -193,6 +193,14 @@ export default function Home() {
   };
 
   const resetPlayerStats = () => {
+    const shouldReset = window.confirm(
+      "Bạn có chắc chắn muốn reset lượt chơi? Dữ liệu lượt tham gia sẽ bị xóa.",
+    );
+
+    if (!shouldReset) {
+      return;
+    }
+
     window.localStorage.removeItem("quiz_turn_count");
     window.localStorage.removeItem("quiz_turn_history");
     setTurnCount(0);
